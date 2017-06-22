@@ -1831,11 +1831,11 @@
             return;
         }
         cellNode.innerHTML = formatterResult.text;
-        if (formatterResult.removeClasses && !suppressRemove) {
-            cellNode.removeClass(formatterResult.removeClasses);
+        if (formatterResult.removeClasses && !suppressRemove) { 
+            $(cellNode).removeClass(formatterResult.removeClasses); 
         }
-        if (formatterResult.addClasses) {
-            cellNode.addClass(formatterResult.addClasses);
+        if (formatterResult.addClasses) { 
+            $(cellNode).addClass(formatterResult.addClasses); 
         }
     }
 
