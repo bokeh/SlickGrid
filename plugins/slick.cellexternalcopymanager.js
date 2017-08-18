@@ -78,8 +78,7 @@
         editor.loadValue(item);
         retVal = editor.serializeValue();
         editor.destroy();
-      }
-      else {
+      } else {
         retVal = item[columnDef.field];
       }
 
@@ -103,6 +102,8 @@
         editor.loadValue(item);
         editor.applyValue(item, value);
         editor.destroy();
+      } else {
+        item[columnDef.field] = value;
       }
     }
 

@@ -3608,8 +3608,8 @@
                   this.editor.applyValue(item, this.serializedValue);
                   updateRow(this.row);
                   trigger(self.onCellChange, {
-                    row: activeRow,
-                    cell: activeCell,
+                    row: this.row,
+                    cell: this.cell,
                     item: item,
                     grid: self
                   });
@@ -3618,8 +3618,8 @@
                   this.editor.applyValue(item, this.prevSerializedValue);
                   updateRow(this.row);
                   trigger(self.onCellChange, {
-                    row: activeRow,
-                    cell: activeCell,
+                    row: this.row,
+                    cell: this.cell,
                     item: item,
                     grid: self
                   });
