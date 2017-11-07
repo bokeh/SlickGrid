@@ -495,7 +495,7 @@
     }
 
     function getHeadersWidth() {
-      var headersWidth = getColumnTotalWidth(true);
+      var headersWidth = getColumnTotalWidth(!options.autoHeight);
       return Math.max(headersWidth, viewportW) + 1000;
     }
 
