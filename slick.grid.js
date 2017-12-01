@@ -2615,7 +2615,6 @@
                }
             }
             if (e.which == keyCode.HOME) {
-               console.log("PRESSED HOME");
                handled = (e.ctrlKey) ? navigateTop() : navigateRowStart();
             } else if (e.which == keyCode.END) {
                handled = (e.ctrlKey) ? navigateBottom() : navigateRowEnd();
@@ -3257,7 +3256,21 @@
 
        scrollCellIntoView(row, 0, true);
        if (options.enableCellNavigation && activeRow != null) {
-          resetActiveCell();
+          var cell = 0, prevCell = null;
+          var prevActivePosX = activePosX;
+          while (cell <= activePosX) {
+             if (canCellBeActive(row, cell)) {
+                prevCell = cell;
+             }
+             cell += getColspan(row, cell);
+          }
+
+          if (prevCell !== null) {
+             setActiveCellInternal(getCellNode(row, prevCell));
+             activePosX = prevActivePosX;
+          } else {
+             resetActiveCell();
+          }
        }
        return true;
     }
