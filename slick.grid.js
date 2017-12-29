@@ -1928,6 +1928,10 @@
         $viewport.height(viewportH);
       }
 
+      if (!scrollbarDimensions || !scrollbarDimensions.width) {
+        scrollbarDimensions = measureScrollbar();
+      }
+      
       if (options.forceFitColumns) {
         autosizeColumns();
       }
