@@ -30,6 +30,7 @@
     var $list;
     var $menu;
     var columnCheckboxes;
+    var onColumnsChanged = new Slick.Event();
 
     var defaults = {
       fadeSpeed: 250,
@@ -188,6 +189,7 @@
         }
 
         grid.setColumns(visibleColumns);
+        onColumnsChanged.notify({"columns": visibleColumns});
       }
     }
 
@@ -199,7 +201,8 @@
 
     return {
       "getAllColumns": getAllColumns,
-      "destroy": destroy
+      "destroy": destroy,
+      "onColumnsChanged": onColumnsChanged
     };
   }
 
