@@ -44,6 +44,7 @@
    *    command:      A command identifier to be passed to the onCommand event handlers.
    *    iconCssClass: A CSS class to be added to the menu item icon.
    *    iconImage:    A url to the icon image.
+   *    autoAlign:    Auto-align will divide into 2 groups and make the left columns have drop menu align on right and vice versa
    *
    *
    * The plugin exposes the following events:
@@ -76,7 +77,9 @@
     var _handler = new Slick.EventHandler();
     var _defaults = {
       buttonCssClass: null,
-      buttonImage: null
+      buttonImage: null,
+      autoAlign: false,
+      width: 100
     };
     var $menu;
     var $activeHeaderColumn;
@@ -94,6 +97,10 @@
 
       // Hide the menu on outside click.
       $(document.body).on("mousedown", handleBodyMouseDown);
+    }
+
+    function setOptions(newOptions) {
+      options = $.extend(true, {}, options, newOptions);
     }
 
 
@@ -215,10 +222,18 @@
           .appendTo($li);
       }
 
-
-      // Position the menu.
+      var leftPos = $(this).offset().left;
+      
+      // when auto-align is set, it will make the left columns have drop menu align on right and vice versa
+      if (options.autoAlign) {
+        var columnCount = _grid.getColumns().length;
+        if (_grid.getColumnIndex(columnDef.id) >= (columnCount / 2)) {
+          leftPos = leftPos - options.width;
+        }  
+      }
+      
       $menu
-        .offset({ top: $(this).offset().top + $(this).height(), left: $(this).offset().left });
+        .offset({ top: $(this).offset().top + $(this).height(), left: leftPos });
 
 
       // Mark the header as active to keep the highlighting.
@@ -260,6 +275,7 @@
     $.extend(this, {
       "init": init,
       "destroy": destroy,
+      "setOptions": setOptions,
 
       "onBeforeMenuShow": new Slick.Event(),
       "onCommand": new Slick.Event()
