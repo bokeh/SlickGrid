@@ -638,12 +638,12 @@
     }
 
     function getHeader() {
-      return $header[0];
+      return $headers[0];
     }
 
     function getHeaderColumn(columnIdOrIdx) {
-      var idx = (typeof columnIdOrIdx === "number" ? columnIdOrIdx : getColumnIndex[columnIdOrIdx]);
-      var $rtn = $header.children().eq(idx);
+      var idx = (typeof columnIdOrIdx === "number" ? columnIdOrIdx : getColumnIndex(columnIdOrIdx));
+      var $rtn = $headers.children().eq(idx);
       return $rtn && $rtn[0];
     }
 
@@ -660,13 +660,13 @@
     }
 
     function getHeaderRowColumn(columnIdOrIdx) {
-      var idx = (typeof columnIdOrIdx === "number" ? columnIdOrIdx : getColumnIndex[columnIdOrIdx]);
+      var idx = (typeof columnIdOrIdx === "number" ? columnIdOrIdx : getColumnIndex(columnIdOrIdx));
       var $rtn = $headerRow.children().eq(idx);
       return $rtn && $rtn[0];
     }
 
     function getFooterRowColumn(columnIdOrIdx) {
-      var idx = (typeof columnIdOrIdx === "number" ? columnIdOrIdx : getColumnIndex[columnIdOrIdx]);
+      var idx = (typeof columnIdOrIdx === "number" ? columnIdOrIdx : getColumnIndex(columnIdOrIdx));
       var $rtn = $footerRow.children().eq(idx);
       return $rtn && $rtn[0];
     }
