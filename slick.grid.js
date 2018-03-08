@@ -87,6 +87,7 @@
       multiColumnSort: false,
       numberedMultiColumnSort: false,
       tristateMultiColumnSort: false,
+      sortColNumberInSeparateSpan: false,
       defaultFormatter: defaultFormatter,
       forceSyncScrolling: false,
       addNewRowCssClass: "new-row",
@@ -144,8 +145,6 @@
     var headerColumnWidthDiff = 0, headerColumnHeightDiff = 0, // border+padding
         cellWidthDiff = 0, cellHeightDiff = 0, jQueryNewWidthBehaviour = false;
     var absoluteColumnMinWidth;
-    var sortIndicatorCssClass = "slick-sort-indicator";
-
     var tabbingDirection = 1;
     var activePosX;
     var activeRow, activeCell;
@@ -319,8 +318,6 @@
           $footerRowScroller.hide();
         }
       }
-
-      if (options.numberedMultiColumnSort) { sortIndicatorCssClass = "slick-sort-indicator-numbered"; }
 
       $focusSink2 = $focusSink.clone().appendTo($container);
 
@@ -741,7 +738,9 @@
 
         if (m.sortable) {
           header.addClass("slick-header-sortable");
-          header.append("<span class='" + sortIndicatorCssClass + "' />");
+          header.append("<span class='slick-sort-indicator" 
+            + (options.numberedMultiColumnSort && !options.sortColNumberInSeparateSpan ? " slick-sort-indicator-numbered" : "" ) + "' />");
+          if (options.numberedMultiColumnSort && options.sortColNumberInSeparateSpan) { header.append("<span class='slick-sort-indicator-numbered' />"); }
         }
 
         trigger(self.onHeaderCellRendered, {
@@ -1362,11 +1361,13 @@
       sortColumns = cols;
       var numberCols = options.numberedMultiColumnSort && sortColumns.length > 1;
       var headerColumnEls = $headers.children();
-      var sortIndicatorEl = headerColumnEls
-          .removeClass("slick-header-column-sorted")
-          .find("." + sortIndicatorCssClass)
-              .removeClass("slick-sort-indicator-asc slick-sort-indicator-desc");
-      sortIndicatorEl.text('');
+      headerColumnEls
+        .removeClass("slick-header-column-sorted")
+        .find(".slick-sort-indicator")
+          .removeClass("slick-sort-indicator-asc slick-sort-indicator-desc");
+      headerColumnEls
+        .find(".slick-sort-indicator-numbered")
+          .text('');
 
       $.each(sortColumns, function(i, col) {
         if (col.sortAsc == null) {
@@ -1374,11 +1375,15 @@
         }
         var columnIndex = getColumnIndex(col.columnId);
         if (columnIndex != null) {
-          sortIndicatorEl = headerColumnEls.eq(columnIndex)
-              .addClass("slick-header-column-sorted")
-              .find("." + sortIndicatorCssClass)
-                  .addClass(col.sortAsc ? "slick-sort-indicator-asc" : "slick-sort-indicator-desc");
-          if (numberCols) { sortIndicatorEl.text(i+1); }
+          headerColumnEls.eq(columnIndex)
+            .addClass("slick-header-column-sorted")
+              .find(".slick-sort-indicator")
+                .addClass(col.sortAsc ? "slick-sort-indicator-asc" : "slick-sort-indicator-desc");
+          if (numberCols) { 
+            headerColumnEls.eq(columnIndex)
+              .find(".slick-sort-indicator-numbered")
+                .text(i+1); 
+          }
         }
       });
     }
