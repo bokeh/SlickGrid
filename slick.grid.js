@@ -95,7 +95,8 @@
       showCellSelection: true,
       viewportClass: null,
       minRowBuffer: 3,
-      emulatePagingWhenScrolling: true
+      emulatePagingWhenScrolling: true, // when scrolling off bottom of viewport, place new row at top of viewport
+      editorCellNavOnLRKeys: false
     };
 
     var columnDefaults = {
