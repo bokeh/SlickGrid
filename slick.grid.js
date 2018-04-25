@@ -1979,7 +1979,7 @@
 
       var oldViewportHasVScroll = viewportHasVScroll;
       // with autoHeight, we do not need to accommodate the vertical scroll bar
-      viewportHasVScroll = !options.autoHeight && (numberOfRows * options.rowHeight > viewportH);
+      viewportHasVScroll = options.alwaysShowVerticalScroll || !options.autoHeight && (numberOfRows * options.rowHeight > viewportH);
       viewportHasHScroll = (canvasWidth > viewportW - scrollbarDimensions.width);
 
       makeActiveCellNormal();
