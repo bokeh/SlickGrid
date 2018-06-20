@@ -29,6 +29,7 @@
 
 
   function SlickColumnPicker(columns, grid, options) {
+    var _grid = grid;
     var $list;
     var $menu;
     var columnCheckboxes;
@@ -44,7 +45,7 @@
       syncResizeTitle: "Synchronous resize"
     };
 
-    function init() {
+    function init(grid) {
       grid.onHeaderContextMenu.subscribe(handleHeaderContextMenu);
       grid.onColumnsReordered.subscribe(updateColumnOrder);
       options = $.extend({}, defaults, options);
@@ -70,8 +71,8 @@
     }
 
     function destroy() {
-      grid.onHeaderContextMenu.unsubscribe(handleHeaderContextMenu);
-      grid.onColumnsReordered.unsubscribe(updateColumnOrder);
+      _grid.onHeaderContextMenu.unsubscribe(handleHeaderContextMenu);
+      _grid.onColumnsReordered.unsubscribe(updateColumnOrder);
       $(document.body).off("mousedown", handleBodyMouseDown);
       $("div.slick-columnpicker").hide(options.fadeSpeed);
       $menu.remove();
@@ -95,7 +96,7 @@
         $input = $("<input type='checkbox' />").data("column-id", columns[i].id);
         columnCheckboxes.push($input);
 
-        if (grid.getColumnIndex(columns[i].id) != null) {
+        if (_grid.getColumnIndex(columns[i].id) != null) {
           $input.attr("checked", "checked");
         }
 
@@ -117,7 +118,7 @@
             .text(forceFitTitle)
             .prepend($input)
             .appendTo($li);
-        if (grid.getOptions().forceFitColumns) {
+        if (_grid.getOptions().forceFitColumns) {
           $input.attr("checked", "checked");
         }
       }
@@ -130,7 +131,7 @@
             .text(syncResizeTitle)
             .prepend($input)
             .appendTo($li);
-        if (grid.getOptions().syncColumnCellResize) {
+        if (_grid.getOptions().syncColumnCellResize) {
           $input.attr("checked", "checked");
         }
       }
@@ -151,10 +152,10 @@
       // We create a new `columns` structure by leaving currently-hidden
       // columns in their original ordinal position and interleaving the results
       // of the current column sort.
-      var current = grid.getColumns().slice(0);
+      var current = _grid.getColumns().slice(0);
       var ordered = new Array(columns.length);
       for (var i = 0; i < ordered.length; i++) {
-        if ( grid.getColumnIndex(columns[i].id) === undefined ) {
+        if ( _grid.getColumnIndex(columns[i].id) === undefined ) {
           // If the column doesn't return a value from getColumnIndex,
           // it is hidden. Leave it in this position.
           ordered[i] = columns[i];
@@ -169,19 +170,19 @@
     function updateColumn(e) {
       if ($(e.target).data("option") == "autoresize") {
         if (e.target.checked) {
-          grid.setOptions({forceFitColumns:true});
-          grid.autosizeColumns();
+          _grid.setOptions({forceFitColumns:true});
+          _grid.autosizeColumns();
         } else {
-          grid.setOptions({forceFitColumns:false});
+          _grid.setOptions({forceFitColumns:false});
         }
         return;
       }
 
       if ($(e.target).data("option") == "syncresize") {
         if (e.target.checked) {
-          grid.setOptions({syncColumnCellResize:true});
+          _grid.setOptions({syncColumnCellResize:true});
         } else {
-          grid.setOptions({syncColumnCellResize:false});
+          _grid.setOptions({syncColumnCellResize:false});
         }
         return;
       }
@@ -199,8 +200,8 @@
           return;
         }
 
-        grid.setColumns(visibleColumns);
-        onColumnsChanged.notify({columns: visibleColumns, grid: grid});
+        _grid.setColumns(visibleColumns);
+        onColumnsChanged.notify({columns: visibleColumns, grid: _grid});
       }
     }
 
@@ -208,9 +209,10 @@
       return columns;
     }
 
-    init();
+    init(_grid);
 
     return {
+      "init": init,
       "getAllColumns": getAllColumns,
       "destroy": destroy,
       "onColumnsChanged": onColumnsChanged
