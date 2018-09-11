@@ -13,8 +13,8 @@
       hideSelectAllCheckbox: false,
       toolTip: "Select/Deselect All",
       width: 30,
-      showInColumnTitleRow: true,
-      showInFilterHeaderRow: false
+      hideInColumnTitleRow: false,
+      hideInFilterHeaderRow: true
     };
     var _isSelectAllChecked = false;
 
@@ -27,10 +27,10 @@
       .subscribe(_grid.onClick, handleClick)
       .subscribe(_grid.onKeyDown, handleKeyDown);
       
-      if (_options.showInFilterHeaderRow) {
+      if (!_options.hideInFilterHeaderRow) {
         addCheckboxToFilterHeaderRow(grid);
       }
-      if (_options.showInColumnTitleRow) {
+      if (!_options.hideInColumnTitleRow) {
         _handler.subscribe(_grid.onHeaderClick, handleHeaderClick)
       }
     }
@@ -50,7 +50,7 @@
         hideSelectAllFromColumnHeaderTitleRow();
         hideSelectAllFromColumnHeaderFilterRow();
       } else {
-        if (_options.showInColumnTitleRow) {
+        if (!_options.hideInColumnTitleRow) {
           if (_isSelectAllChecked) {
             _grid.updateColumnHeader(_options.columnId, "<input id='header-selector" + _selectAll_UID + "' type='checkbox' checked='checked'><label for='header-selector" + _selectAll_UID + "'></label>", _options.toolTip);
           } else {
@@ -61,7 +61,7 @@
           hideSelectAllFromColumnHeaderTitleRow();
         }
 
-        if (_options.showInFilterHeaderRow) {
+        if (!_options.hideInFilterHeaderRow) {
           var selectAllContainer = $("#filter-checkbox-selectall-container");
           selectAllContainer.show();
           selectAllContainer.find('input[type="checkbox"]').prop("checked", _isSelectAllChecked);
@@ -97,14 +97,14 @@
       _grid.render();
       _isSelectAllChecked = selectedRows.length && selectedRows.length == _grid.getDataLength();
 
-      if (_options.showInColumnTitleRow && !_options.hideSelectAllCheckbox) {
+      if (!_options.hideInColumnTitleRow && !_options.hideSelectAllCheckbox) {
         if (_isSelectAllChecked) {
           _grid.updateColumnHeader(_options.columnId, "<input id='header-selector" + _selectAll_UID + "' type='checkbox' checked='checked'><label for='header-selector" + _selectAll_UID + "'></label>", _options.toolTip);
         } else {
           _grid.updateColumnHeader(_options.columnId, "<input id='header-selector" + _selectAll_UID + "' type='checkbox'><label for='header-selector" + _selectAll_UID + "'></label>", _options.toolTip);
         }
       } 
-      if (_options.showInFilterHeaderRow) {
+      if (!_options.hideInFilterHeaderRow) {
         var selectAllElm = $("#header-filter-selector" + _selectAll_UID);
         selectAllElm.prop("checked", _isSelectAllChecked);
       }
@@ -214,7 +214,7 @@
     function getColumnDefinition() {
       return {
         id: _options.columnId,
-        name: (_options.hideSelectAllCheckbox || !_options.showInColumnTitleRow) ? "" : "<input id='header-selector" + _selectAll_UID + "' type='checkbox'><label for='header-selector" + _selectAll_UID + "'></label>",
+        name: (_options.hideSelectAllCheckbox || _options.hideInColumnTitleRow) ? "" : "<input id='header-selector" + _selectAll_UID + "' type='checkbox'><label for='header-selector" + _selectAll_UID + "'></label>",
         toolTip: _options.toolTip,
         field: "sel",
         width: _options.width,
