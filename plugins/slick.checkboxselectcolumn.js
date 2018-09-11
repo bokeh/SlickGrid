@@ -48,7 +48,7 @@
       
       if (_options.hideSelectAllCheckbox) {
         _grid.updateColumnHeader(_options.columnId, "", "");
-        $("#header-filter-selector" + _selectAll_UID).hide();
+        $("#filter-checkbox-selectall-container").hide();
       } else {
         if (_options.showInColumnTitleRow) {
           if (_isSelectAllChecked) {
@@ -58,7 +58,8 @@
           }
         }
         if (_options.showInFilterHeaderRow) {
-          var selectAllElm = $("#header-filter-selector" + _selectAll_UID).show();
+          $("#filter-checkbox-selectall-container").show();
+          var selectAllElm = $("#header-filter-selector");
           selectAllElm.prop("checked", _isSelectAllChecked);
         }
       } 
@@ -215,7 +216,7 @@
       grid.onHeaderRowCellRendered.subscribe(function(e, args) {
         if (args.column.field === "sel") {
           $(args.node).empty();
-          $("<input id='header-filter-selector" + _selectAll_UID + "' type='checkbox'><label for='header-filter-selector" + _selectAll_UID + "'></label>")
+          $("<span id='filter-checkbox-selectall-container'><input id='header-filter-selector" + _selectAll_UID + "' type='checkbox'><label for='header-filter-selector" + _selectAll_UID + "'></label></span>")
             .appendTo(args.node)
             .on('click', function(evnt) { 
               handleHeaderClick(evnt, args) 
