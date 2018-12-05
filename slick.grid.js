@@ -3570,7 +3570,7 @@
        return {
           "row": row,
           "cell": newCell,
-          "posX": posX
+          "posX": newCell
        };
     }
 
@@ -3581,7 +3581,7 @@
        return {
           "row": row,
           "cell": newCell,
-          "posX": posX
+          "posX": newCell
        };
     }
 
