@@ -195,7 +195,7 @@
             }
           }
           columnsGroupBy = newGroupingOrder;
-          updateGroupBy();
+          updateGroupBy("sort-group");
         }
       });
       emptyDropbox = dropbox.html();
@@ -250,7 +250,7 @@
 
     function addColumnGroupBy(column) {
       columnsGroupBy.push(column);
-      updateGroupBy();
+      updateGroupBy("add-group");
     }
 
     function addGroupByRemoveClickHandler(id, container, column, entry) {
@@ -271,7 +271,7 @@
     }
     function clearDroppedGroups() {
       columnsGroupBy = [];
-      updateGroupBy();
+      updateGroupBy("clear-all");
       dropbox.find(".slick-dropped-grouping").remove();
       groupToggler.css("display", "none");
       dropboxPlaceholder.show()
@@ -300,13 +300,13 @@
       if(columnsGroupBy.length == 0){
         dropboxPlaceholder.show();
       }
-      updateGroupBy();
+      updateGroupBy("remove-group");
     }
 
-    function updateGroupBy() {
+    function updateGroupBy(originator) {
       if (columnsGroupBy.length == 0) {
         _dataView.setGrouping([]);
-        onGroupChanged.notify({ groupColumns: [] });
+        onGroupChanged.notify({ caller: originator, groupColumns: [] });
         return;
       }
       var groupingArray = [];
@@ -317,7 +317,7 @@
       /*
       collapseAllGroups();
       */
-      onGroupChanged.notify({ groupColumns: groupingArray})
+      onGroupChanged.notify({ caller: originator, groupColumns: groupingArray})
     }
 
     // Public API
