@@ -3864,7 +3864,7 @@
       if (!selectionModel) {
         throw new Error("Selection model is not set");
       }
-      if (!grid.getEditorLock().isActive()) {
+      if (self && self.getEditorLock && !self.getEditorLock().isActive()) {
         selectionModel.setSelectedRanges(rowsToRanges(rows));
       }
     }
