@@ -3898,7 +3898,7 @@
     // Public API
 
     $.extend(this, {
-      "slickGridVersion": "2.3.22",
+      "slickGridVersion": "2.3.23",
 
       // Events
       "onScroll": new Slick.Event(),
