@@ -22,8 +22,9 @@
         bodyElement: option to specify a custom DOM element which to will be added the hidden textbox. It's useful if the grid is inside a modal dialog.
         onCopyInit: optional handler to run when copy action initializes
         onCopySuccess: optional handler to run when copy action is complete
-        newRowCreator: function to add rows to table if paste overflows bottom of table
+        newRowCreator: function to add rows to table if paste overflows bottom of table, if this function is not provided new rows will be ignored.
         readOnlyMode: suppresses paste
+        headerColumnValueExtractor : option to specify a custom column header value extractor function
     */
     var _grid;
     var _self = this;
@@ -55,13 +56,22 @@
     function destroy() {
       _grid.onKeyDown.unsubscribe(handleKeyDown);
     }
+    
+    function getHeaderValueForColumn(columnDef) {
+      if (_options.headerColumnValueExtractor) {
+        var val = _options.headerColumnValueExtractor(columnDef);
 
-    function getDataItemValueForColumn(item, columnDef) {
+        if (val) { return val; }
+      }
+      
+      return columnDef.name;
+    }
+
+    function getDataItemValueForColumn(item, columnDef, e) {
       if (_options.dataItemColumnValueExtractor) {
-        var dataItemColumnValueExtractorValue = _options.dataItemColumnValueExtractor(item, columnDef);
+        var val = _options.dataItemColumnValueExtractor(item, columnDef);
 
-        if (dataItemColumnValueExtractorValue)
-          return dataItemColumnValueExtractorValue;
+        if (val) { return val; }
       }
 
       var retVal = '';
@@ -72,14 +82,14 @@
           'container':$("<p>"),  // a dummy container
           'column':columnDef,
           'position':{'top':0, 'left':0},  // a dummy position required by some editors
-          'grid':_grid
+          'grid':_grid,
+          'event':e
         };
         var editor = new columnDef.editor(editorArgs);
         editor.loadValue(item);
         retVal = editor.serializeValue();
         editor.destroy();
-      }
-      else {
+      } else {
         retVal = item[columnDef.field];
       }
 
@@ -103,6 +113,8 @@
         editor.loadValue(item);
         editor.applyValue(item, value);
         editor.destroy();
+      } else {
+        item[columnDef.field] = value;
       }
     }
 
@@ -163,7 +175,9 @@
       }
       var availableRows = _grid.getData().length - activeRow;
       var addRows = 0;
-      if(availableRows < destH)
+
+      // ignore new rows if we don't have a "newRowCreator"
+      if(availableRows < destH && _options.newRowCreator)
       {
         var d = _grid.getData();
         for(addRows = 1; addRows <= destH - availableRows; addRows++)
@@ -334,13 +348,13 @@
                         var clipTextHeaders = [];
                         for (var j = range.fromCell; j < range.toCell + 1 ; j++) {
                             if (columns[j].name.length > 0)
-                                clipTextHeaders.push(columns[j].name);
+                                clipTextHeaders.push(getHeaderValueForColumn(columns[j]));
                         }
                         clipTextRows.push(clipTextHeaders.join("\t"));
                     }
 
                     for (var j=range.fromCell; j< range.toCell+1 ; j++){
-                        clipTextCells.push(getDataItemValueForColumn(dt, columns[j]));
+                        clipTextCells.push(getDataItemValueForColumn(dt, columns[j], e));
                     }
                     clipTextRows.push(clipTextCells.join("\t"));
                 }
@@ -424,6 +438,10 @@
       _grid.removeCellCssStyles(_copiedCellStyleLayerKey);
     }
 
+    function setIncludeHeaderWhenCopying(includeHeaderWhenCopying) {
+      _options.includeHeaderWhenCopying = includeHeaderWhenCopying;
+    }
+    
     $.extend(this, {
       "init": init,
       "destroy": destroy,
@@ -432,7 +450,8 @@
 
       "onCopyCells": new Slick.Event(),
       "onCopyCancelled": new Slick.Event(),
-      "onPasteCells": new Slick.Event()
+      "onPasteCells": new Slick.Event(),
+      "setIncludeHeaderWhenCopying" : setIncludeHeaderWhenCopying
     });
   }
 
