@@ -1203,13 +1203,15 @@
 
   // TODO:  add more built-in aggregators
   // TODO:  merge common aggregators in one to prevent needles iterating
+  var Aggregators = {
+    Avg: AvgAggregator,
+    Min: MinAggregator,
+    Max: MaxAggregator,
+    Sum: SumAggregator
+  };
 
   module.exports = {
     DataView: DataView,
-    Aggregators: {
-      Avg: AvgAggregator,
-      Min: MinAggregator,
-      Max: MaxAggregator,
-      Sum: SumAggregator
-    }
+    Aggregators: Aggregators,
+    Data: {Aggregators: Aggregators},
   };
