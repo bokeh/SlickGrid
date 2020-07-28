@@ -1,14 +1,15 @@
+  var Slick = require("./slick.core");
+
 /***
  * Contains basic SlickGrid formatters.
- * 
+ *
  * NOTE:  These are merely examples.  You will most likely need to implement something more
  *        robust/extensible/localizable/etc. for your use!
- * 
+ *
  * @module Formatters
  * @namespace Slick
  */
 
-(function ($) {
   function PercentCompleteFormatter(row, cell, value, columnDef, dataContext) {
     if (value == null || value === "") {
       return "-";
@@ -49,17 +50,12 @@
     return value ? "<img src='../images/tick.png'>" : "";
   }
 
-  // exports
-  $.extend(true, window, {
-    "Slick": {
-      "Formatters": {
-        "PercentComplete": PercentCompleteFormatter,
-        "PercentCompleteBar": PercentCompleteBarFormatter,
-        "YesNo": YesNoFormatter,
-        "Checkmark": CheckmarkFormatter,
-        "Checkbox": CheckboxFormatter
-
-      }
+  module.exports = {
+    Formatters: {
+      PercentComplete: PercentCompleteFormatter,
+      PercentCompleteBar: PercentCompleteBarFormatter,
+      YesNo: YesNoFormatter,
+      Checkmark: CheckmarkFormatter,
+      Checkbox: CheckboxFormatter
     }
-  });
-})(jQuery);
+  };

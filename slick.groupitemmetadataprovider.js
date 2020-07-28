@@ -1,4 +1,6 @@
-(function ($) {
+  var $ = require("./slick.jquery");
+  var Slick = require("./slick.core");
+
   /***
    * Provides item metadata for group (Slick.Group) and totals (Slick.Totals) rows produced by the DataView.
    * This metadata overrides the default behavior and formatting of those rows so that they appear and function
@@ -153,7 +155,7 @@
     }
 
     function getTotalsRowMetadata(item) {
-      var groupLevel = item && item.group && item.group.level;      
+      var groupLevel = item && item.group && item.group.level;
       return {
         selectable: false,
         focusable: options.totalsFocusable,
@@ -174,12 +176,6 @@
     };
   }
 
-  // exports
-  $.extend(true, window, {
-    Slick: {
-      Data: {
-        GroupItemMetadataProvider: GroupItemMetadataProvider
-      }
-    }
-  });
-})(jQuery);
+  module.exports = {
+    GroupItemMetadataProvider: GroupItemMetadataProvider
+  };

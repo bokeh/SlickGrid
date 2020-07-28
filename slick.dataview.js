@@ -1,4 +1,6 @@
-(function ($) {
+  var $ = require("./slick.jquery");
+  var Slick = require("./slick.core");
+
   /***
    * A sample Model implementation.
    * Provides a filtered view of the underlying data.
@@ -1557,19 +1559,16 @@
   // TODO:  add more built-in aggregators
   // TODO:  merge common aggregators in one to prevent needles iterating
 
-  // exports
-  $.extend(true, window, {
-    Slick: {
-      Data: {
-        DataView: DataView,
-        Aggregators: {
-          Avg: AvgAggregator,
-          Min: MinAggregator,
-          Max: MaxAggregator,
-          Sum: SumAggregator,
-          Count: CountAggregator
-        }
-      }
-    }
-  });
-})(jQuery);
+  var Aggregators = {
+    Avg: AvgAggregator,
+    Min: MinAggregator,
+    Max: MaxAggregator,
+    Sum: SumAggregator,
+    Count: CountAggregator,
+  };
+
+  module.exports = {
+    DataView: DataView,
+    Aggregators: Aggregators,
+    Data: {Aggregators: Aggregators},
+  };

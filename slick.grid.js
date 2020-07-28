@@ -16,20 +16,9 @@
  *     and do proper cleanup.
  */
 
-// make sure required JavaScript modules are loaded
-if (typeof jQuery === "undefined") {
-  throw new Error("SlickGrid requires jquery module to be loaded");
-}
-if (!jQuery.fn.drag) {
-  throw new Error("SlickGrid requires jquery.event.drag module to be loaded");
-}
-if (typeof Slick === "undefined") {
-  throw new Error("slick.core.js not loaded");
-}
+  var $ = jQuery = require("./slick.jquery");
+  var Slick = require("./slick.core");
 
-
-(function ($) {
-  "use strict";
   // shared across all grids on the page
   var scrollbarDimensions;
   var maxSupportedCssHeight;  // browser's breaking point
@@ -47,6 +36,14 @@ if (typeof Slick === "undefined") {
    * @param {Object}            options     Grid options.
    **/
   function SlickGrid(container, data, columns, options) {
+    if (!$.fn.drag) {
+      require('./lib/jquery.event.drag-2.3.0');
+    }
+
+    if (!$.fn.drop) {
+      require('./lib/jquery.event.drop-2.3.0');
+    }
+
     // settings
     var defaults = {
       alwaysShowVerticalScroll: false,
@@ -307,7 +304,7 @@ if (typeof Slick === "undefined") {
     // Initialization
 
     function init() {
-      if (container instanceof jQuery) {
+      if (container instanceof $) {
         $container = container;
       } else {
         $container = $(container);
@@ -3901,7 +3898,7 @@ if (typeof Slick === "undefined") {
           queuePostProcessedCellForCleanup(cellNode, cellToRemove, row);
         } else {
           cellNode.parentElement.removeChild(cellNode);
-        }       
+        }
 
         delete cacheEntry.cellColSpans[cellToRemove];
         delete cacheEntry.cellNodesByColumnIdx[cellToRemove];
@@ -4129,7 +4126,7 @@ if (typeof Slick === "undefined") {
 
     	  if ( hasFrozenRows ) {
 
-    		  var renderedFrozenRows = jQuery.extend(true, {}, rendered);
+    		  var renderedFrozenRows = $.extend(true, {}, rendered);
 
     		  if (options.frozenBottom) {
 
@@ -5210,7 +5207,7 @@ if (typeof Slick === "undefined") {
     function getActiveCellNode() {
       return activeCellNode;
     }
-	  
+
     //This get/set methods are used for keeping text-selection. These don't consider IE because they don't loose text-selection.
     //Fix for firefox selection. See https://github.com/mleibman/SlickGrid/pull/746/files
     function getTextSelection(){
@@ -6097,10 +6094,6 @@ if (typeof Slick === "undefined") {
     init();
   }
 
-  // exports
-  $.extend(true, window, {
-    Slick: {
-      Grid: SlickGrid
-    }
-  });
-}(jQuery));
+  module.exports = {
+    Grid: SlickGrid
+  }

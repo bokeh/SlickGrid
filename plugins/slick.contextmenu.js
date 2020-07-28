@@ -1,12 +1,5 @@
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "Plugins": {
-        "ContextMenu": ContextMenu
-      }
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   /***
    * A plugin to add Context Menu (mouse right+click), it subscribes to the cell "onContextMenu" event.
@@ -701,4 +694,7 @@
       "onOptionSelected": new Slick.Event()
     });
   }
-})(jQuery);
+
+  module.exports = {
+    "ContextMenu": ContextMenu
+  };

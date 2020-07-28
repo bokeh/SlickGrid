@@ -1,4 +1,6 @@
-(function ($) {
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
+
   function SlickGridPager(dataView, grid, $container, options) {
     var $status;
     var _options;
@@ -213,6 +215,6 @@
     init();
   }
 
-  // Slick.Controls.Pager
-  $.extend(true, window, { Slick:{ Controls:{ Pager:SlickGridPager }}});
-})(jQuery);
+  module.exports = {
+    "Pager": SlickGridPager
+  };

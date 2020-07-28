@@ -9,13 +9,9 @@
  *    usabilityOverride:    Callback method that user can override the default behavior of the row being moveable or not
  *
  */
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "RowMoveManager": RowMoveManager
-    }
-  });
+
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   function RowMoveManager(options) {
     var _grid;
@@ -225,4 +221,7 @@
       "pluginName": "RowMoveManager"
     });
   }
-})(jQuery);
+
+  module.exports = {
+    "RowMoveManager": RowMoveManager
+  };
