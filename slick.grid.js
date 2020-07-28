@@ -16,27 +16,8 @@
  *     and do proper cleanup.
  */
 
-// make sure required JavaScript modules are loaded
-if (typeof jQuery === "undefined") {
-  throw new Error("SlickGrid requires jquery module to be loaded");
-}
-if (!jQuery.fn.drag) {
-  throw new Error("SlickGrid requires jquery.event.drag module to be loaded");
-}
-if (typeof Slick === "undefined") {
-  throw new Error("slick.core.js not loaded");
-}
-
-
-(function ($) {
-  "use strict";
-
-  // Slick.Grid
-  $.extend(true, window, {
-    Slick: {
-      Grid: SlickGrid
-    }
-  });
+  var $ = require("./slick.jquery");
+  var Slick = require("./slick.core");
 
   // shared across all grids on the page
   var scrollbarDimensions;
@@ -55,6 +36,14 @@ if (typeof Slick === "undefined") {
    * @param {Object}            options     Grid options.
    **/
   function SlickGrid(container, data, columns, options) {
+    if (!$.fn.drag) {
+      require('./lib/jquery.event.drag-2.3.0');
+    }
+
+    if (!$.fn.drop) {
+      require('./lib/jquery.event.drop-2.3.0');
+    }
+
     // settings
     var defaults = {
       alwaysShowVerticalScroll: false,
@@ -319,7 +308,7 @@ if (typeof Slick === "undefined") {
     // Initialization
 
     function init() {
-      if (container instanceof jQuery) {
+      if (container instanceof $) {
         $container = container;
       } else {
         $container = $(container);
@@ -567,7 +556,7 @@ if (typeof Slick === "undefined") {
         $viewport
             .on("scroll", handleScroll);
 
-        if (jQuery.fn.mousewheel) {
+        if ($.fn.mousewheel) {
           $viewport.on("mousewheel", handleMouseWheel);
         }
 
@@ -4006,7 +3995,7 @@ if (typeof Slick === "undefined") {
 
     	  if ( hasFrozenRows ) {
 
-    		  var renderedFrozenRows = jQuery.extend(true, {}, rendered);
+    		  var renderedFrozenRows = $.extend(true, {}, rendered);
 
     		  if (options.frozenBottom) {
 
@@ -5942,4 +5931,7 @@ if (typeof Slick === "undefined") {
 
     init();
   }
-}(jQuery));
+
+  module.exports = {
+    Grid: SlickGrid
+  }

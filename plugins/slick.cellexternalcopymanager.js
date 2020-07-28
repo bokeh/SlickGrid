@@ -1,11 +1,6 @@
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "CellExternalCopyManager": CellExternalCopyManager
-    }
-  });
-
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
+  var keyCodes = Slick.keyCode;
 
   function CellExternalCopyManager(options) {
     /*
@@ -40,13 +35,6 @@
     var _bodyElement = _options.bodyElement || document.body;
     var _onCopyInit = _options.onCopyInit || null;
     var _onCopySuccess = _options.onCopySuccess || null;
-    
-    var keyCodes = {
-      'C': 67,
-      'V': 86,
-      'ESC': 27,
-      'INSERT': 45
-    };
 
     function init(grid) {
       _grid = grid;
@@ -462,11 +450,14 @@
 
       "clearCopySelection": clearCopySelection,
       "handleKeyDown":handleKeyDown,
-      
+
       "onCopyCells": new Slick.Event(),
       "onCopyCancelled": new Slick.Event(),
       "onPasteCells": new Slick.Event(),
       "setIncludeHeaderWhenCopying" : setIncludeHeaderWhenCopying
     });
   }
-})(jQuery);
+
+  module.exports = {
+      "CellExternalCopyManager": CellExternalCopyManager
+  };

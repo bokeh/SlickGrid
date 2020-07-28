@@ -1,10 +1,5 @@
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "CellRangeSelector": CellRangeSelector
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   function CellRangeSelector(options) {
     var _grid;
@@ -181,4 +176,7 @@
       "onCellRangeSelected": new Slick.Event()
     });
   }
-})(jQuery);
+
+  module.exports = {
+    "CellRangeSelector": CellRangeSelector
+  };

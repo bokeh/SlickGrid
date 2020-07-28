@@ -1,10 +1,5 @@
-(function ($) {
-  // Register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "AutoTooltips": AutoTooltips
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   /**
    * AutoTooltips plugin to show/hide tooltips when columns are too narrow to fit content.
@@ -84,4 +79,7 @@
       "pluginName": "AutoTooltips"
     });
   }
-})(jQuery);
+
+  module.exports = {
+      "AutoTooltips": AutoTooltips
+  };

@@ -1,12 +1,5 @@
-(function ($) {
-  $.extend(true, window, {
-    Slick: {
-      Data: {
-        GroupItemMetadataProvider: GroupItemMetadataProvider
-      }
-    }
-  });
-
+  var $ = require("./slick.jquery");
+  var Slick = require("./slick.core");
 
   /***
    * Provides item metadata for group (Slick.Group) and totals (Slick.Totals) rows produced by the DataView.
@@ -182,4 +175,7 @@
       "setOptions": setOptions
     };
   }
-})(jQuery);
+
+  module.exports = {
+    GroupItemMetadataProvider: GroupItemMetadataProvider
+  };

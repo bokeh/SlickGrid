@@ -1,15 +1,16 @@
 {
-  "name": "slickgrid",
+  "name": "@bokeh/slickgrid",
   "version": "2.4.27",
   "description": "A lightning fast JavaScript grid/spreadsheet",
-  "main": "slick.core.js",
+  "main": "index.js",
+  "types": "index.d.ts",
   "directories": {
     "example": "examples",
     "test": "tests"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/6pac/SlickGrid.git"
+    "url": "git+https://github.com/bokeh/SlickGrid.git"
   },
   "keywords": [
     "slickgrid",
@@ -30,8 +31,10 @@
     "serve": "http-server ./ -p 8080 -a localhost -s"
   },
   "dependencies": {
-    "jquery": ">=1.8.0",
-    "jquery-ui": ">=1.8.0"
+    "tslib": "^1.10.0",
+    "jquery": ">=3.4.0",
+    "jquery-ui": ">=1.8.0",
+    "@types/slickgrid": "^2.1.30"
   },
   "devDependencies": {
     "cypress": "^4.8.0",

@@ -1,10 +1,5 @@
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "CellSelectionModel": CellSelectionModel
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   function CellSelectionModel(options) {
     var _grid;
@@ -187,4 +182,7 @@
       "onSelectedRangesChanged": new Slick.Event()
     });
   }
-})(jQuery);
+
+  module.exports = {
+      "CellSelectionModel": CellSelectionModel
+  };

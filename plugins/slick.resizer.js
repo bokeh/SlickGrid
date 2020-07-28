@@ -46,17 +46,8 @@
  * @constructor
  */
 
-'use strict';
-
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "Plugins": {
-        "Resizer": Resizer
-      }
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   function Resizer(options, fixedDimensions) {
     // global variables, height/width are in pixels
@@ -314,4 +305,7 @@
       "onGridBeforeResize": new Slick.Event()
     });
   }
-})(jQuery);
+
+  module.exports = {
+    "Resizer": Resizer
+  };

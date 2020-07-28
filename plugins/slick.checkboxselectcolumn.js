@@ -1,11 +1,5 @@
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "CheckboxSelectColumn": CheckboxSelectColumn
-    }
-  });
-
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   function CheckboxSelectColumn(options) {
     var _grid;
@@ -335,4 +329,7 @@
       "setOptions": setOptions,
     });
   }
-})(jQuery);
+
+  module.exports = {
+      "CheckboxSelectColumn": CheckboxSelectColumn
+  };

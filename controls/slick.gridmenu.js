@@ -110,17 +110,8 @@
  * @constructor
  */
 
-'use strict';
-
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "Controls": {
-        "GridMenu": SlickGridMenu
-      }
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   function SlickGridMenu(columns, grid, options) {
     var _grid = grid;
@@ -641,4 +632,7 @@
       "onColumnsChanged": new Slick.Event()
     });
   }
-})(jQuery);
+
+  module.exports = {
+    "GridMenu": SlickGridMenu
+  };

@@ -1,10 +1,5 @@
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    Slick: {
-      State: State
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   var localStorageWrapper = function() {
     var localStorage = window.localStorage;
@@ -150,4 +145,7 @@
       "onStateChanged": onStateChanged
     });
   }
-})(jQuery);
+
+  module.exports = {
+    State: State
+  };

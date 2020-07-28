@@ -1,3 +1,6 @@
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
+
 /**
  *
  * Draggable Grouping contributed by:  Muthukumar Selvarasu
@@ -7,14 +10,6 @@
  * NOTES:
  *     This plugin provides the Draggable Grouping feature
  */
-
-(function ($) {
-  // Register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "DraggableGrouping": DraggableGrouping
-    }
-  });
 
   /***
    * A plugin to add Draggable Grouping feature.
@@ -330,4 +325,7 @@
       "getSetupColumnReorder": setupColumnReorder,
     });
   }
-})(jQuery);
+
+  module.exports = {
+      "DraggableGrouping": DraggableGrouping
+  };

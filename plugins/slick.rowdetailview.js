@@ -79,15 +79,9 @@
  *        expandedRows: Array of the Expanded Rows
  *        rowIdsOutOfViewport: Array of the Out of viewport Range Rows
  */
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "Plugins": {
-        "RowDetailView": RowDetailView
-      }
-    }
-  });
+
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   /** Constructor of the Row Detail View Plugin */
   function RowDetailView(options) {
@@ -783,4 +777,7 @@
       "onRowBackToViewportRange": new Slick.Event()
     });
   }
-})(jQuery);
+
+  module.exports = {
+    "RowDetailView": RowDetailView
+  };

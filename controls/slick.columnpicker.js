@@ -25,8 +25,9 @@
  * @constructor
  */
 
-(function ($) {
-  'use strict';
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
+
   function SlickColumnPicker(columns, grid, options) {
     var _grid = grid;
     var _options = options;
@@ -241,6 +242,6 @@
     };
   }
 
-  // Slick.Controls.ColumnPicker
-  $.extend(true, window, { Slick: { Controls: { ColumnPicker: SlickColumnPicker } } });
-})(jQuery);
+  module.exports = {
+    "ColumnPicker": SlickColumnPicker
+  };

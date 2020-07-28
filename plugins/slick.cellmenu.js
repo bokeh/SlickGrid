@@ -1,12 +1,5 @@
-(function ($) {
-  // register namespace
-  $.extend(true, window, {
-    "Slick": {
-      "Plugins": {
-        "CellMenu": CellMenu
-      }
-    }
-  });
+  var $ = require("../slick.jquery");
+  var Slick = require("../slick.core");
 
   /***
    * A plugin to add Menu on a Cell click (click on the cell that has the cellMenu object defined)
@@ -670,4 +663,7 @@
       "onOptionSelected": new Slick.Event()
     });
   }
-})(jQuery);
+
+  module.exports = {
+    "CellMenu": CellMenu
+  };
