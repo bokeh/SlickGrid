@@ -1,6 +1,6 @@
 {
   "name": "@bokeh/slickgrid",
-  "version": "2.4.27-1",
+  "version": "2.4.2701",
   "description": "A lightning fast JavaScript grid/spreadsheet",
   "main": "index.js",
   "types": "index.d.ts",
