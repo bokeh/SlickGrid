@@ -2823,14 +2823,27 @@
 
       setCellCssStyles(options.selectedCellCssClass, hash);
 
-      if (simpleArrayEquals(previousSelectedRows, selectedRows)) {
+      if (!simpleArrayEquals(previousSelectedRows, selectedRows)) {
         trigger(self.onSelectedRowsChanged, {rows: getSelectedRows(), previousSelectedRows: previousSelectedRows}, e);
       }
     }
 
     // compare 2 simple arrays (integers or strings only, do not use to compare object arrays)
     function simpleArrayEquals(arr1, arr2) {
-      return Array.isArray(arr1) && Array.isArray(arr2) && arr2.sort().toString() !== arr1.sort().toString();
+      if (!Array.isArray(arr1) || !Array.isArray(arr2))
+        return true
+
+      const s1 = new Set(arr1)
+      const s2 = new Set(arr2)
+
+      if (s1.size != s2.size)
+        return false
+      for (const item of s1) {
+        if (!s2.has(item))
+          return false
+      }
+
+      return true
     }
 
     function getColumns() {
