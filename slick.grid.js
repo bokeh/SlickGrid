@@ -2023,7 +2023,11 @@
     }
 
     function createCssRules() {
-      $style = $("<style type='text/css' rel='stylesheet' />").appendTo($("head"));
+      $style = $("<style type='text/css' rel='stylesheet' />")
+      if ($container[0].parentNode instanceof ShadowRoot)
+        $container[0].parentNode.insertBefore($style[0], $container[0])
+      else
+        $style.appendTo($("head"));
       var rowHeight = (options.rowHeight - cellHeightDiff);
       var rules = [
         "." + uid + " .slick-group-header-column { left: 1000px; }",
@@ -2051,7 +2055,11 @@
     function getColumnCssRules(idx) {
       var i;
       if (!stylesheet) {
-        var sheets = document.styleSheets;
+        var sheets;
+        if ($container[0].parentNode instanceof ShadowRoot)
+          sheets = $container[0].parentNode.styleSheets;
+        else
+          sheets = document.styleSheets;
         for (i = 0; i < sheets.length; i++) {
           if ((sheets[i].ownerNode || sheets[i].owningElement) == $style[0]) {
             stylesheet = sheets[i];
