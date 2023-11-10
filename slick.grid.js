@@ -16,7 +16,9 @@
  *     and do proper cleanup.
  */
 
-  var $ = jQuery = require("./slick.jquery");
+  const jQuery = require("./slick.jquery");
+  const $ = jQuery;
+
   var Slick = require("./slick.core");
 
   // shared across all grids on the page
